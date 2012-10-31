@@ -2,12 +2,14 @@ package net.minecraft.src;
 
 import java.util.Random;
 
-public class HorrorModScythe extends HorrorModTools {
+import tyler15555.HMProxies.CommonProxy;
+
+public class HorrorModScythe extends ItemTool {
 
 	 private static Block blocksEffectiveAgainst[];
 	
-	protected HorrorModScythe(int i, HorrorModToolMaterial enumtoolmaterial) {
-		super(i, 4, enumtoolmaterial);
+	protected HorrorModScythe(int i, EnumToolMaterial enumtoolmaterial) {
+		super(i, i, enumtoolmaterial, blocksEffectiveAgainst);
 	}
 	public boolean canHarvestBlock(Block block)
     {
@@ -73,6 +75,10 @@ public class HorrorModScythe extends HorrorModTools {
                 }
             }
         }
+    }
+    
+    public String getTextureFile() {
+    	return CommonProxy.ITEMS_TEXTURE;
     }
 
 }

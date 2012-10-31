@@ -1,5 +1,13 @@
 package net.minecraft.src;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.util.Random;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 public class EntityReaper extends EntityMob {
 
 	private final ItemStack heldItem = new ItemStack(mod_HorrorMobs.ReaperScythe);
@@ -46,6 +54,22 @@ public class EntityReaper extends EntityMob {
                 this.setFire(9);
             }
         }
+		Random random = new Random();
+		int randInt1 = random.nextInt();
+		int randInt2 = random.nextInt();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(8);
+		DataOutputStream outputStream = new DataOutputStream(bos);
+		try {
+			outputStream.writeInt(randInt1);
+			outputStream.writeInt(randInt2);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		Packet250CustomPayload mobPacket = new Packet250CustomPayload();
+		mobPacket.channel = "HM-Mobs";
+		mobPacket.data = bos.toByteArray();
+		mobPacket.length = bos.size();
+		PacketDispatcher.sendPacketToAllPlayers(mobPacket);
 		super.onLivingUpdate();
 	}
 	
